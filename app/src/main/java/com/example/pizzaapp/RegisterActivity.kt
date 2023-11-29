@@ -33,19 +33,17 @@ class RegisterActivity : AppCompatActivity() {
             //check data -> email sudah terdaftar atau belum
             val  data:String = databaseHelper.checkData(email)
             //jika belum terdaftar
-            if (data == null){
+            if (data == ""){
                 //insert data
                 databaseHelper.addAccount(
                     email, name, level, password)
 
                 //show LoginActivity
-                val intentLogin = Intent(this@RegisterActivity,
-                    LoginActivity::class.java)
+                val intentLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
                 startActivity(intentLogin)
             }else {
                 //jika email telah terdaftar
-                Toast.makeText(this@RegisterActivity, "Register failed." +
-                    "Your email already registered", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@RegisterActivity, "Register failed." + "Your email already registered", Toast.LENGTH_SHORT).show()
             }
         }
     }

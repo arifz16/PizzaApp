@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 
 class LoginActivity : AppCompatActivity() {
@@ -20,6 +21,7 @@ class LoginActivity : AppCompatActivity() {
         val txtPassword:EditText = findViewById(R.id.editTextPassword)
         //instance button login
         val btnLogin:Button = findViewById(R.id.buttonLogin)
+        val btnDontHave: TextView = findViewById(R.id.editTextRegister)
 
         //event button login
         btnLogin.setOnClickListener {
@@ -54,5 +56,12 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             }
         }
+
+        //event button dont have
+        btnDontHave.setOnClickListener {
+            val intentRegister = Intent(this,RegisterActivity::class.java)
+            startActivity(intentRegister)
+        }
+
     }
 }
