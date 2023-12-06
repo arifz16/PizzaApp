@@ -21,47 +21,34 @@ class LoginActivity : AppCompatActivity() {
         val txtPassword:EditText = findViewById(R.id.editTextPassword)
         //instance button login
         val btnLogin:Button = findViewById(R.id.buttonLogin)
-        val btnDontHave: TextView = findViewById(R.id.editTextRegister)
+        val btnRegis:TextView = findViewById(R.id.editTextRegister)
+
+        btnRegis.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
         //event button login
         btnLogin.setOnClickListener {
-            //object class databaseHelper
-            val databaseHelper = DatabaseHelper(this)
+
+            //instance
+            val dbHelper = DatabaseHelper(this)
+            val result:Boolean = dbHelper.checklogin(txtUsername.text.toString(), txtPassword.text.toString())
+
+            if(result){
+                val intentLogin = Intent(this@LoginActivity, MainActivity::class.java)
+                startActivity(intentLogin)
+            }else {
+                Toast.makeText(this@LoginActivity, "Login gagal, coba lagi !!", Toast.LENGTH_SHORT).show()
+            }
 
             //check data
-            val data:String = databaseHelper.checkData("stevi.ema@amikom.ac.id")
-            Toast.makeText(this@LoginActivity, "Result : " + data,
-                Toast.LENGTH_SHORT).show()
-            if (data == null){
+            val data:String = dbHelper.checkData(txtUsername.text.toString())
+            Toast.makeText(this@LoginActivity, "Result : " + data, Toast.LENGTH_SHORT).show()
+            if (data==null) {
                 //insert data
-                databaseHelper.addAccount("stevi.ema@amikom.ac.id",
-                    "Stevi Ema W","Cashier","12345")
-            }
-
-            val email = txtUsername.text.toString().trim()
-            val password = txtPassword.text.toString().trim()
-
-            //check login
-            var result:Boolean = databaseHelper.checklogin(email,password)
-            if (result == true) {
-                Toast.makeText(
-                    this@LoginActivity, "Login Succes ",
-                    Toast.LENGTH_SHORT).show()
-                val intentLogin = Intent(
-                    this@LoginActivity,
-                    MainActivity::class.java)
-                startActivity(intentLogin)
-            }else{
-                Toast.makeText(this@LoginActivity,"Login failed, Try Again !!!",
-                    Toast.LENGTH_SHORT).show()
+                dbHelper.addAccount("damaradii.nugroho@gmail.com", "damar adi nugroho", "cashier", "12345")
             }
         }
-
-        //event button dont have
-        btnDontHave.setOnClickListener {
-            val intentRegister = Intent(this,RegisterActivity::class.java)
-            startActivity(intentRegister)
-        }
-
     }
 }
